@@ -7,7 +7,7 @@ from kivymd.uix.button import MDRaisedButton
 import openai
 
 # Set your OpenAI API key
-openai.api_key = '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'
+openai.api_key = ''
 
 KV = '''
 BoxLayout:
