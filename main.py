@@ -14,14 +14,16 @@ import openai
 from openai import OpenAI
 
 import config
-
-
+import os
+#import constants
 
 
 
 
 # Set your OpenAI API key
-openai.api_key = config.api_key
+#openai.api_key = config.api_key
+openai.api_key =os.environ["OPENAI_API_KEY"]
+#os.environ["OPENAI_API_KEY"]=constants.APIKEY
 
 #client = OpenAI(
 #    api_key=config.api_key,
