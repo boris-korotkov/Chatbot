@@ -107,6 +107,13 @@ BoxLayout:
 
 class ChatApp(MDApp):
     def build(self):
+        self.theme_cls.primary_palette = "Teal"
+        self.theme_cls.primary_hue = "700"
+        self.theme_cls.theme_style = "Light"
+        
+        # Set the icon for the app
+        self.icon = 'chatbot-icon-mini.png'
+
         return Builder.load_string(KV)
 
     def on_send(self, instance=None):
