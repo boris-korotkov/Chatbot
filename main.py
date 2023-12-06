@@ -58,46 +58,56 @@ KV = '''
 BoxLayout:
     orientation: 'vertical'
 
+    ScrollView:
+        id: scroll_view
+        MDGridLayout:
+            cols: 1
+            adaptive_height: True
+            spacing: dp(20)
+            padding: dp(20)
+            effect_cls: 'ScrollEffect'
+
+            MDLabel:
+                id: chat_history_label
+                text: "Chat History:"
+                size_hint_y: None
+                height: dp(44)
+
     MDGridLayout:
-        id: conversation_layout
-        cols: 1
+        cols: 2
         adaptive_height: True
         spacing: dp(20)
         padding: dp(20)
 
-        MDLabel:
-            id: chat_history_label
-            text: "Chat History:"
-            size_hint_y: None
-            height: dp(44)
-
         MDTextField:
-            id: text_input  # Added an id to reference directly in the Python code
+            id: text_input
             multiline: False
             hint_text: "Type your question..."
             on_text_validate: app.on_send()
 
+        MDFillRoundFlatIconButton:
+            text: "Send"
+            icon: "send"
+            on_release: app.on_send()
+            size_hint: None, None
+            size: "150dp", "50dp"
+            pos_hint: {"center_y": 0.5}
     
-
-    MDFillRoundFlatIconButton:
-        text: "Send"
-        icon: "send"
-        on_release: app.on_send()
-        pos_hint: {"center_x": 0.5, "center_y": 0.3}  # Increased center_y for more space from the bottom
-        size_hint: None, None
-        size: "150dp", "50dp"  # Set the size of the button    
+    Widget:
+        size_hint_y: None
+        height: dp(10)
     
-    Widget:  # Spacer to create space at the bottom
+    Widget:
         size_hint_y: None
         height: dp(10)
 '''
 
+
+
+
 class ChatApp(MDApp):
     def build(self):
         return Builder.load_string(KV)
-        #self.layout = BoxLayout(orientation='vertical')
-    
-
 
     def on_send(self, instance=None):
         user_question = self.root.ids.text_input.text
@@ -108,20 +118,26 @@ class ChatApp(MDApp):
         # Get the bot's response
         bot_response = get_openai_response(user_question)
 
-        # Add the bot's response to the conversation history
-        conversation_history.append(f"Bot: {bot_response}")
+         # Check if the bot's response already contains "Bot:" label
+        if not bot_response.startswith("Bot:"):
+            bot_response = f"Bot: {bot_response}"
+
+        # Add the bot's response to the conversation history with an empty line
+        conversation_history.append(f"{bot_response}\n")
 
         # Display the updated conversation
         chat_history_label = self.root.ids.chat_history_label
         chat_history_label.text = '\n'.join(conversation_history)
+
+        # Scroll to the bottom if there is not enough space for the new content
+        if chat_history_label.height > self.root.ids.scroll_view.height:
+            self.root.ids.scroll_view.scroll_y = 0
 
         # Clear the text input for the next question
         self.root.ids.text_input.text = ""
 
         # Return focus to the text input
         self.root.ids.text_input.focus = True
-
-
 
 if __name__ == '__main__':
     ChatApp().run()
