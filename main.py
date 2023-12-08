@@ -21,13 +21,10 @@ import os
 
 
 # Set your OpenAI API key
-#openai.api_key = config.api_key
-openai.api_key =os.environ["OPENAI_API_KEY"]
+openai.api_key = config.api_key
+#openai.api_key =os.environ["OPENAI_API_KEY"]
 #os.environ["OPENAI_API_KEY"]=constants.APIKEY
 
-#client = OpenAI(
-#    api_key=config.api_key,
-#)
 
 # Initialize an empty list to store the conversation history
 conversation_history = []
@@ -112,7 +109,7 @@ class ChatApp(MDApp):
         self.theme_cls.theme_style = "Light"
         
         # Set the icon for the app
-        self.icon = 'chatbot-icon-mini.png'
+        self.icon = 'images/chatbot-icon-mini.png'
 
         return Builder.load_string(KV)
 
