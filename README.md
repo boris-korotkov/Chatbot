@@ -12,7 +12,7 @@ Since you are very busy people let me just summarize key points from my experien
 + The code generation may take 5-10% of all time spent for development. The picture below is a true representation.
 ![Alt text](<images/Chat GPT usage.jpg>)
 + If you use GitHub for code management, you need to apply techiniques to hide your OpenAI API key. It can be accidentally leaked to the GutHub public repo and seen by other people. Luckly, OpenAI developed Internet scan to detect such leak and block the leaked API key. My leaked key was detected within 10 minutes.
-+ The Chat GPT 3.5 is trained on historical data and may not be aware about recent changes in the libraries. For example, it was not able to suggest me the correct syntax for OpenAI API response method. Thus, old school googling sckills are still valid. Another option is probably to use GPT-4, but it is a paid option.
++ The Chat GPT 3.5 is trained on historical data and may not be aware about recent changes in the libraries. For example, it was not able to suggest me the correct syntax for OpenAI API response method. Thus, old school googling skills are still useful. Another option is probably to use GPT-4, but it is still a paid option as of now.
 
 The overall architechture was very simple. See a diagram below.
 
